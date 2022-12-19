@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    tool 'Docker'
+    stages {
+        stage('chekout') {
+            steps {
+                git credentialsId: 'cec617e7-95f2-47d8-87d7-3d95094b0d39', url: 'https://github.com/yogitachourey123/dockerfilemadebyme.git'
+            }
+        }
+         stage('build') {
+            steps {
+               sh 'docker build -t hello_java_jenkins_docker_image .'
+                
+            }
+        }
+        stage('run') {
+            steps {
+                sh 'docker run -t hello_java_jenkins_docker_image'
+                
+            }
+        }
+        stage('tag') {
+            steps {
+                sh 'docker tag  hello_java_jenkins_docker_image yogitachourey/hello_java_jenkins_docker_image'
+                
+            }
+        }
+        stage('docker push'){
+        steps {
+      	withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
+         sh 'docker push yogitachourey/hello_java_jenkins_docker_image'
+        }
+          }
+    }
+}
