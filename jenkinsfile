@@ -22,7 +22,7 @@ pipeline {
         }
         stage('docker push'){
         steps {
-      	withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+      	withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'yogita123', usernameVariable: 'yogitachourey')]) {
         	bat 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
          bat 'docker push yogitachourey/hello_java_jenkins_docker_image'
         }
