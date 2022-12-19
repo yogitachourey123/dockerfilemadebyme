@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    tool 'Docker'
+    tool 'DOCKER_HOME'
     stages {
          stage('build') {
             steps {
@@ -26,6 +26,7 @@ pipeline {
         	sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
          sh 'docker push yogitachourey/hello_java_jenkins_docker_image'
         }
-          }
+           }
     }
+  }
 }
